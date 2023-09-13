@@ -1,4 +1,4 @@
-package com.douglas.fastTrackSupport.domain;
+package com.douglas.fastTrackSupport.domain.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.douglas.fastTrackSupport.domain.Tecnico;
 import com.douglas.fastTrackSupport.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

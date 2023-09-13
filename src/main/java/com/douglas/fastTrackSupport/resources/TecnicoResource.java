@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglas.fastTrackSupport.domain.Tecnico;
-import com.douglas.fastTrackSupport.domain.TecnicoDTO;
+import com.douglas.fastTrackSupport.domain.dtos.TecnicoDTO;
 import com.douglas.fastTrackSupport.services.TecnicoService;
 
 import jakarta.validation.Valid;

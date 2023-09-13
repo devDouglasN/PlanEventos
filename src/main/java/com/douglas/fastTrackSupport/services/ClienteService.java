@@ -8,8 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.douglas.fastTrackSupport.domain.Pessoa;
+import com.douglas.fastTrackSupport.domain.dtos.ClienteDTO;
 import com.douglas.fastTrackSupport.domain.Cliente;
-import com.douglas.fastTrackSupport.domain.ClienteDTO;
 import com.douglas.fastTrackSupport.repositories.PessoaRepository;
 import com.douglas.fastTrackSupport.repositories.ClienteRepository;
 

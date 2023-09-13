@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.douglas.fastTrackSupport.domain.Pessoa;
 import com.douglas.fastTrackSupport.domain.Tecnico;
-import com.douglas.fastTrackSupport.domain.TecnicoDTO;
+import com.douglas.fastTrackSupport.domain.dtos.TecnicoDTO;
 import com.douglas.fastTrackSupport.repositories.PessoaRepository;
 import com.douglas.fastTrackSupport.repositories.TecnicoRepository;
 

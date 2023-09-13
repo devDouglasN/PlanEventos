@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglas.fastTrackSupport.domain.Cliente;
-import com.douglas.fastTrackSupport.domain.ClienteDTO;
+import com.douglas.fastTrackSupport.domain.dtos.ClienteDTO;
 import com.douglas.fastTrackSupport.services.ClienteService;
 
 import jakarta.validation.Valid;
