@@ -13,6 +13,8 @@ import com.douglas.fastTrackSupport.domain.TecnicoDTO;
 import com.douglas.fastTrackSupport.repositories.PessoaRepository;
 import com.douglas.fastTrackSupport.repositories.TecnicoRepository;
 
+import jakarta.validation.Valid;
+
 @Service
 public class TecnicoService {
 
@@ -36,6 +38,14 @@ public class TecnicoService {
 		validaPorCpfEEmail(objDTO);
 		Tecnico newObj = new Tecnico(objDTO);
 		return repository.save(newObj);
+	}
+	
+	public Tecnico update(Integer id, @Valid TecnicoDTO objDTO) {
+		objDTO.setId(id);
+		Tecnico oldObj = findById(id);
+		validaPorCpfEEmail(objDTO);
+		oldObj = new Tecnico(objDTO);
+		return repository.save(oldObj);
 	}
 
 	private void validaPorCpfEEmail(TecnicoDTO objDTO) {
