@@ -1,4 +1,4 @@
-package com.douglas.planeventos.domain.enums;
+package com.douglas.planeventos.enums;
 
 public enum StatusEvento  {
 
