@@ -1,5 +1,6 @@
 package com.douglas.planeventos.domain;
 
+import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -7,9 +8,9 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
+
 public class Participante extends Pessoa {
 
     private static final long serialVersionUID = 1L;
@@ -35,5 +36,13 @@ public class Participante extends Pessoa {
         this.senha = obj.getSenha();
         this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
         this.dataCriacao = obj.getDataCriacao();
+    }
+
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
     }
 }

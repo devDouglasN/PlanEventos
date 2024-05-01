@@ -1,5 +1,7 @@
 package com.douglas.planeventos.domain;
 
+import com.douglas.planeventos.domain.enums.HorarioEvento;
+import com.douglas.planeventos.domain.enums.StatusEvento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
