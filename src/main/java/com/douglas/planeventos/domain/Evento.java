@@ -1,6 +1,5 @@
 package com.douglas.planeventos.domain;
 
-
 import com.douglas.planeventos.enums.HorarioEvento;
 import com.douglas.planeventos.enums.StatusEvento;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,8 +8,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 
+@Entity
 public class Evento implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id

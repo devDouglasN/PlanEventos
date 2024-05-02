@@ -3,13 +3,14 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.domain.dtos.OrganizadorDTO;
 import com.douglas.planeventos.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Entity
 public class Organizador extends Pessoa {
 
     private static final long serialVersionUID = 1L;
