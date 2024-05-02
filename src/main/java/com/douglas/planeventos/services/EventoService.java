@@ -14,7 +14,9 @@ import com.douglas.planeventos.repositories.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EventoService {
 	
 	@Autowired
