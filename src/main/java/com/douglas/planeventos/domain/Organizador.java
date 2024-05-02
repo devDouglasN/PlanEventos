@@ -1,11 +1,9 @@
 package com.douglas.planeventos.domain;
 
 import com.douglas.planeventos.domain.dtos.OrganizadorDTO;
-import com.douglas.planeventos.domain.enums.Perfil;
+import com.douglas.planeventos.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.douglas.planeventos.domain.dtos;
 
 import com.douglas.planeventos.domain.Participante;
-import com.douglas.planeventos.domain.enums.Perfil;
+import com.douglas.planeventos.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CPF;

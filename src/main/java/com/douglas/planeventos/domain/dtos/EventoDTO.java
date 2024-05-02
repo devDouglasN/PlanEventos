@@ -3,14 +3,11 @@ package com.douglas.planeventos.domain.dtos;
 import com.douglas.planeventos.domain.Evento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serial;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 public class EventoDTO {
 
     @Serial
@@ -54,5 +51,86 @@ public class EventoDTO {
         this.participante = obj.getParticipante().getId();
         this.nomeOrganizador = obj.getOrganizador().getNome();
         this.nomeParticipante = obj.getParticipante().getNome();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public LocalDate getDataEvento() {
+        return dataEvento;
+    }
+
+    public void setDataEvento(LocalDate dataEvento) {
+        this.dataEvento = dataEvento;
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Integer getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Integer horario) {
+        this.horario = horario;
+    }
+
+    public Integer getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(Integer participante) {
+        this.participante = participante;
+    }
+
+    public Integer getOrganizador() {
+        return organizador;
+    }
+
+    public void setOrganizador(Integer organizador) {
+        this.organizador = organizador;
+    }
+
+    public String getNomeParticipante() {
+        return nomeParticipante;
+    }
+
+    public void setNomeParticipante(String nomeParticipante) {
+        this.nomeParticipante = nomeParticipante;
+    }
+
+    public String getNomeOrganizador() {
+        return nomeOrganizador;
+    }
+
+    public void setNomeOrganizador(String nomeOrganizador) {
+        this.nomeOrganizador = nomeOrganizador;
     }
 }

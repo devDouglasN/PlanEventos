@@ -1,12 +1,10 @@
 package com.douglas.planeventos.domain.dtos;
 
-
 import com.douglas.planeventos.domain.Organizador;
-import com.douglas.planeventos.domain.enums.Perfil;
+import com.douglas.planeventos.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;

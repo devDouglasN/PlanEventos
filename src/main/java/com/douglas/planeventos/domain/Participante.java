@@ -3,8 +3,6 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;

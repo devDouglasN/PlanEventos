@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.douglas.planeventos.domain.enums.Perfil;
-import lombok.Getter;
-import lombok.Setter;
+import com.douglas.planeventos.enums.Perfil;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
