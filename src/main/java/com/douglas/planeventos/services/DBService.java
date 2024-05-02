@@ -1,56 +1,57 @@
 package com.douglas.planeventos.services;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
+import com.douglas.planeventos.domain.Evento;
+import com.douglas.planeventos.domain.Organizador;
+import com.douglas.planeventos.domain.Participante;
+import com.douglas.planeventos.enums.HorarioEvento;
+import com.douglas.planeventos.enums.Perfil;
+import com.douglas.planeventos.enums.StatusEvento;
+import com.douglas.planeventos.repositories.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.douglas.planeventos.domain.Chamado;
-import com.douglas.planeventos.domain.Cliente;
-import com.douglas.planeventos.domain.Tecnico;
-import com.douglas.planeventos.domain.enums.Perfil;
-import com.douglas.planeventos.domain.enums.Prioridade;
-import com.douglas.planeventos.domain.enums.Status;
-import com.douglas.planeventos.repositories.ChamadoRepository;
 import com.douglas.planeventos.repositories.PessoaRepository;
 
 @Service
 public class DBService {
-	
+
 	@Autowired
-	private ChamadoRepository chamadoRepository;
-	
+	private EventoRepository eventoRepository;
+
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	public void instanciaDB() {
 
-		Tecnico tec1 = new Tecnico(null, "Douglas Nascimento", "109.099.870-84", "douglas@mail.com", encoder.encode("123"));
-		tec1.addPerfil(Perfil.ADMIN);
-		Tecnico tec2 = new Tecnico(null, "Clara Pereira", "859.322.510-18", "clara@mail.com", encoder.encode("123"));
-		Tecnico tec3 = new Tecnico(null, "Guilherme Souza", "663.964.430-40", "guilherme@mail.com", encoder.encode("123"));
-		Tecnico tec4 = new Tecnico(null, "Rafael Costa", "673.029.140-01", "rafael@mail.com", encoder.encode("123"));
-		Tecnico tec5 = new Tecnico(null, "Carolina Lima", "743.822.010-98", "linus@mail.com", encoder.encode("123"));
+		Organizador org1 = new Organizador(null, "Douglas Nascimento", "123.456.789-01", "douglas@mail.com", encoder.encode("123"));
+		org1.addPerfil(Perfil.ADMIN);
+		Organizador org2 = new Organizador(null, "Clara Pereira", "123.456.789-02", "clara@mail.com", encoder.encode("123"));
+		Organizador org3 = new Organizador(null, "Guilherme Souza", "123.456.789-03", "guilherme@mail.com", encoder.encode("123"));
+		Organizador org4 = new Organizador(null, "Rafael Costa", "123.456.789-04", "rafael@mail.com", encoder.encode("123"));
+		Organizador org5 = new Organizador(null, "Carolina Lima", "123.456.789-05", "linus@mail.com", encoder.encode("123"));
 
-		Cliente cli1 = new Cliente(null, "Mahatma Gandhi", "446.882.380-10", "mahatma@mail.com", encoder.encode("123"));
-		Cliente cli2 = new Cliente(null, "MFrida Kahlo", "658.327.270-96", "mFrida@mail.com", encoder.encode("123"));
-		Cliente cli3 = new Cliente(null, "Michael Jordan", "517.396.860-55", "michael@mail.com", encoder.encode("123"));
-		Cliente cli4 = new Cliente(null, "Nelson Mandela", "764.309.390-30", "nelson@mail.com", encoder.encode("123"));
-		Cliente cli5 = new Cliente(null, "Elon Musk", "852.388.520-02", "elon@mail.com", encoder.encode("123"));
+		Participante par1 = new Participante(null, "Mahatma Gandhi", "123.456.789-06", "mahatma@mail.com", encoder.encode("123"));
+		Participante par2 = new Participante(null, "Frida Kahlo", "123.456.789-07", "mFrida@mail.com", encoder.encode("123"));
+		Participante par3 = new Participante(null, "Michael Jordan", "123.456.789-08", "michael@mail.com", encoder.encode("123"));
+		Participante par4 = new Participante(null, "Nelson Mandela", "123.456.789-09", "nelson@mail.com", encoder.encode("123"));
+		Participante par5 = new Participante(null, "Elon Musk", "123.456.789-10", "elon@mail.com", encoder.encode("123"));
 
 
-		Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ENCERRADO, "Chamado 1", "Teste chamado 1", tec1, cli1);
-		Chamado c2 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, "Chamado 2", "Teste chamado 2", tec1, cli2);
-		Chamado c3 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado 3", "Teste chamado 3", tec2, cli3);
-		Chamado c4 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, "Chamado 4", "Teste chamado 4", tec3, cli3);
-		Chamado c5 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado 5", "Teste chamado 5", tec2, cli1);
-		Chamado c6 = new Chamado(null, Prioridade.BAIXA, Status.ANDAMENTO, "Chamado 7", "Teste chamado 6", tec1, cli5);
+		Evento e1 = new Evento(null, LocalDate.now(), "Local 1", "Descrição evento 1", StatusEvento.ABERTO, HorarioEvento.MANHA, org1, par1);
+		Evento e2 = new Evento(null, LocalDate.now(), "Local 2", "Descrição evento 2", StatusEvento.ABERTO, HorarioEvento.TARDE, org1, par2);
+		Evento e3 = new Evento(null, LocalDate.now(), "Local 3", "Descrição evento 3", StatusEvento.ENCERRADO, HorarioEvento.NOITE, org2, par3);
+		Evento e4 = new Evento(null, LocalDate.now(), "Local 4", "Descrição evento 4", StatusEvento.ABERTO, HorarioEvento.MANHA, org3, par3);
+		Evento e5 = new Evento(null, LocalDate.now(), "Local 5", "Descrição evento 5", StatusEvento.ANDAMENTO, HorarioEvento.TARDE, org2, par1);
+		Evento e6 = new Evento(null, LocalDate.now(), "Local 6", "Descrição evento 6", StatusEvento.ANDAMENTO, HorarioEvento.NOITE, org1, par5);
 
-		pessoaRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5));
-		chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
+		pessoaRepository.saveAll(Arrays.asList(org1, org2, org3, org4, org5, par1, par2, par3, par4, par5));
+		eventoRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6));
 	}
 }
