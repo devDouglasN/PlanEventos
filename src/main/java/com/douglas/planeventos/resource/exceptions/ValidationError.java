@@ -1,4 +1,4 @@
-package com.douglas.planeventos.resources.exceptions;
+package com.douglas.planeventos.resource.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

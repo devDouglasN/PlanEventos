@@ -1,5 +1,6 @@
-package com.douglas.planeventos.resources.exceptions;
+package com.douglas.planeventos.resource.exceptions;
 
+import com.douglas.planeventos.services.ObjectnotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +8,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import com.douglas.planeventos.services.ObjectnotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 

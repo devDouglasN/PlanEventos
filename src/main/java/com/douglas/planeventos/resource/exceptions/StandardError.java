@@ -1,4 +1,4 @@
-package com.douglas.planeventos.resources.exceptions;
+package com.douglas.planeventos.resource.exceptions;
 
 import java.io.Serializable;
 
