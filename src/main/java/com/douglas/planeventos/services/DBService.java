@@ -28,21 +28,20 @@ public class DBService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-	public void instanciaDB() {
+	public void startDB() {
 
-		Organizador org1 = new Organizador(null, "Douglas Nascimento", "123.456.789-01", "douglas@mail.com", encoder.encode("123"));
+		Organizador org1 = new Organizador(null, "Douglas Nascimento", "173.500.000-06", "douglas@mail.com", encoder.encode("123"));
 		org1.addPerfil(Perfil.ADMIN);
-		Organizador org2 = new Organizador(null, "Clara Pereira", "123.456.789-02", "clara@mail.com", encoder.encode("123"));
-		Organizador org3 = new Organizador(null, "Guilherme Souza", "123.456.789-03", "guilherme@mail.com", encoder.encode("123"));
-		Organizador org4 = new Organizador(null, "Rafael Costa", "123.456.789-04", "rafael@mail.com", encoder.encode("123"));
-		Organizador org5 = new Organizador(null, "Carolina Lima", "123.456.789-05", "linus@mail.com", encoder.encode("123"));
+		Organizador org2 = new Organizador(null, "Clara Pereira", "937.131.780-97", "clara@mail.com", encoder.encode("123"));
+		Organizador org3 = new Organizador(null, "Guilherme Souza", "339.813.380-06", "guilherme@mail.com", encoder.encode("123"));
+		Organizador org4 = new Organizador(null, "Rafael Costa", "654.317.230-49", "rafael@mail.com", encoder.encode("123"));
+		Organizador org5 = new Organizador(null, "Carolina Lima", "413.020.050-06", "linus@mail.com", encoder.encode("123"));
 
-		Participante par1 = new Participante(null, "Mahatma Gandhi", "123.456.789-06", "mahatma@mail.com", encoder.encode("123"));
-		Participante par2 = new Participante(null, "Frida Kahlo", "123.456.789-07", "mFrida@mail.com", encoder.encode("123"));
-		Participante par3 = new Participante(null, "Michael Jordan", "123.456.789-08", "michael@mail.com", encoder.encode("123"));
-		Participante par4 = new Participante(null, "Nelson Mandela", "123.456.789-09", "nelson@mail.com", encoder.encode("123"));
-		Participante par5 = new Participante(null, "Elon Musk", "123.456.789-10", "elon@mail.com", encoder.encode("123"));
-
+		Participante par1 = new Participante(null, "Mahatma Gandhi", "844.940.030-93", "mahatma@mail.com", encoder.encode("123"));
+		Participante par2 = new Participante(null, "Frida Kahlo", "815.398.940-53", "mFrida@mail.com", encoder.encode("123"));
+		Participante par3 = new Participante(null, "Michael Jordan", "847.895.340-06", "michael@mail.com", encoder.encode("123"));
+		Participante par4 = new Participante(null, "Nelson Mandela", "741.487.910-03", "nelson@mail.com", encoder.encode("123"));
+		Participante par5 = new Participante(null, "Elon Musk", "161.633.540-87", "elon@mail.com", encoder.encode("123"));
 
 		Evento e1 = new Evento(null, LocalDate.now(), "Local 1", "Descrição evento 1", StatusEvento.ABERTO, HorarioEvento.MANHA, org1, par1);
 		Evento e2 = new Evento(null, LocalDate.now(), "Local 2", "Descrição evento 2", StatusEvento.ABERTO, HorarioEvento.TARDE, org1, par2);
