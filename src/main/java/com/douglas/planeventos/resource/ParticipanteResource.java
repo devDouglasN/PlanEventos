@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/eventos")
+@RequestMapping(value = "/participantes")
 public class ParticipanteResource {
 
 	@Autowired
