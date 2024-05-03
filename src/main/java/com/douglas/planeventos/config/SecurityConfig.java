@@ -1,5 +1,6 @@
 package com.douglas.planeventos.config;
 
+import com.douglas.planeventos.infra.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
 
@@ -25,6 +27,9 @@ public class SecurityConfig {
 
 	@Autowired
 	private Environment environment;
+
+	@Autowired
+	private SecurityFilter securityFilter;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,7 +44,9 @@ public class SecurityConfig {
 				.authorizeRequests(req -> {
 					req.requestMatchers(HttpMethod.POST, "/login").permitAll();
 					req.anyRequest().authenticated();
-				}).build();
+				})
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
