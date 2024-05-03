@@ -8,7 +8,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,7 +20,6 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 @Profile("test")
 public class SecurityConfig {
 
@@ -39,7 +37,8 @@ public class SecurityConfig {
 				.cors().and().csrf(csrf -> csrf.disable())
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeRequests(req -> {
-					req.anyRequest().permitAll();
+					req.requestMatchers(HttpMethod.POST, "/login").permitAll();
+					req.anyRequest().authenticated();
 				}).build();
 	}
 	@Bean
