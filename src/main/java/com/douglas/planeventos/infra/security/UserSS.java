@@ -1,4 +1,4 @@
-package com.douglas.planeventos.security;
+package com.douglas.planeventos.infra.security;
 
 import java.util.Collection;
 import java.util.Set;

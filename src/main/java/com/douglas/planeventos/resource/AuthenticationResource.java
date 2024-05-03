@@ -2,8 +2,8 @@ package com.douglas.planeventos.resource;
 
 import com.douglas.planeventos.domain.dtos.CredentialDTO;
 import com.douglas.planeventos.domain.dtos.LoginResponseDTO;
-import com.douglas.planeventos.security.TokenService;
-import com.douglas.planeventos.security.UserSS;
+import com.douglas.planeventos.infra.security.TokenService;
+import com.douglas.planeventos.infra.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package com.douglas.planeventos.security;
+package com.douglas.planeventos.infra.security;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

@@ -2,7 +2,7 @@ package com.douglas.planeventos.services;
 
 import com.douglas.planeventos.domain.Pessoa;
 import com.douglas.planeventos.repositories.PessoaRepository;
-import com.douglas.planeventos.security.UserSS;
+import com.douglas.planeventos.infra.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

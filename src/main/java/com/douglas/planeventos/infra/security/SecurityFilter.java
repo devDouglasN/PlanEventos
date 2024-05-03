@@ -1,4 +1,4 @@
-package com.douglas.planeventos.security;
+package com.douglas.planeventos.infra.security;
 
 import java.io.IOException;
 import java.util.Optional;
