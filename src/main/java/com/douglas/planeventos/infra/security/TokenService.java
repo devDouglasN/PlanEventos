@@ -10,9 +10,10 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 public class TokenService {
 	
 	@Value("${jwt.secret}")
@@ -25,9 +26,11 @@ public class TokenService {
 	          .withIssuer("PlanEventos")
 	          .withSubject(userSS.getUsername())
 	          .sign(algorithm);
+
 	      return token;
+
 	    } catch (JWTCreationException e){
-	      throw new RuntimeException("Error while generating token ", e);
+	      throw new RuntimeException("Erro na geração do token ", e);
 	    }
 	  }
 
