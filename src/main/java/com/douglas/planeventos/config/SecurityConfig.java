@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@Profile("test")
+@Profile("dev")
 public class SecurityConfig {
 
 	@Autowired
