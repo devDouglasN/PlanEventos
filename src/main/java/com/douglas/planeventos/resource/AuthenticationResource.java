@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/login")
 public class AuthenticationResource {
 
 	@Autowired
@@ -21,7 +25,7 @@ public class AuthenticationResource {
 	@Autowired
 	private TokenService tokenService;
 
-	@PostMapping("/login")
+	@PostMapping
 	public ResponseEntity login(@RequestBody @Valid CredentialDTO credentialDTO) {
 
 		var usernamePassword = new UsernamePasswordAuthenticationToken(credentialDTO.email(), credentialDTO.password());
