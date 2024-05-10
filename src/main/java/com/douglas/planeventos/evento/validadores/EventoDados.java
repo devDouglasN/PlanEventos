@@ -3,6 +3,7 @@ package com.douglas.planeventos.evento.validadores;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record EventoDados (
@@ -10,7 +11,8 @@ public record EventoDados (
         @NotNull
         Integer idParticipante,
 
-        @NotNull Integer idOrganizador,
+        @NotNull
+        Integer idOrganizador,
 
         LocalDate dataEvento,
 
@@ -21,9 +23,8 @@ public record EventoDados (
         LocalTime horarioFim,
 
         @NotNull
-        String local,
+        LocalDateTime data,
 
-        @NotNull
-        String descricao
+        Integer quantidadePessoas
 ) {
 }
