@@ -3,8 +3,10 @@ package com.douglas.planeventos.evento.validadores;
 import com.douglas.planeventos.repositories.ParticipanteRepository;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class DisponibilidadeDeParticipanteRule {
+@Component
+public class DisponibilidadeDeParticipanteRule implements ValidadorParaEvento {
 
     @Autowired
     private ParticipanteRepository repository;

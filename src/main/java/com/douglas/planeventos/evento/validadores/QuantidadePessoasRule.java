@@ -1,12 +1,17 @@
 package com.douglas.planeventos.evento.validadores;
 
-public class QuantidadePessoasRule {
+import jakarta.validation.ValidationException;
+import org.springframework.stereotype.Component;
+
+@Component
+
+public class QuantidadePessoasRule implements ValidadorParaEvento {
 
     private static final int MAX_PESSOAS = 200;
 
-    public void validarQuantidadePessoas(EventoDados dados) throws Exception {
+    public void validador (EventoDados dados) {
         if (dados.quantidadePessoas() > MAX_PESSOAS) {
-            throw new Exception("A quantidade de pessoas excede o máximo permitido");
+            throw new ValidationException("A quantidade de pessoas excede o máximo permitido");
         }
     }
 }
