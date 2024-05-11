@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.douglas.planeventos.domain.Evento;
 import com.douglas.planeventos.domain.dtos.EventoDTO;
+import com.douglas.planeventos.evento.validadores.EventoDados;
 import com.douglas.planeventos.services.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,8 @@ public class EventoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<EventoDTO> create(@Valid @RequestBody EventoDTO obj) {
-		Evento newObj = service.create(obj);
+	public ResponseEntity<Evento> create(@Valid @RequestBody EventoDados eventoDados) {
+		Evento newObj = service.newEvento(eventoDados);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
