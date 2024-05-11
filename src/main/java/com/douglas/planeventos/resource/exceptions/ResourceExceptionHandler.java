@@ -1,6 +1,6 @@
 package com.douglas.planeventos.resource.exceptions;
 
-import com.douglas.planeventos.services.ObjectnotFoundException;
+import com.douglas.planeventos.services.exceptions.ObjectnotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

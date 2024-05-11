@@ -1,4 +1,4 @@
-package com.douglas.planeventos.services;
+package com.douglas.planeventos.services.exceptions;
 
 public class ObjectnotFoundException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
