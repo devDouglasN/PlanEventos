@@ -18,6 +18,8 @@ public class Participante extends Pessoa {
     @OneToMany(mappedBy = "participante")
     private List<Evento> eventos = new ArrayList<>();
 
+    private Boolean active;
+
     public Participante() {
         super();
     }
@@ -28,6 +30,7 @@ public class Participante extends Pessoa {
 
     public Participante(ParticipanteDTO obj) {
         super();
+        this.active = true;
         this.id = obj.getId();
         this.nome = obj.getNome();
         this.cpf = obj.getCpf();
@@ -43,5 +46,13 @@ public class Participante extends Pessoa {
 
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

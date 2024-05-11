@@ -5,6 +5,7 @@ import com.douglas.planeventos.domain.Pessoa;
 import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.douglas.planeventos.repositories.ParticipanteRepository;
 import com.douglas.planeventos.repositories.PessoaRepository;
+import com.douglas.planeventos.services.exceptions.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
