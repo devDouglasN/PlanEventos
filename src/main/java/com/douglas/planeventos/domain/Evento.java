@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Entity
@@ -25,6 +26,9 @@ public class Evento implements Serializable {
     private String descricao;
     private StatusEvento status;
     private HorarioEvento horario;
+
+    private LocalTime horarioInicio;
+    private LocalTime horarioFim;
 
     @ManyToOne
     @JoinColumn(name = "organizador_id")
@@ -98,6 +102,23 @@ public class Evento implements Serializable {
 
     public void setHorario(HorarioEvento horario) {
         this.horario = horario;
+    }
+
+
+    public LocalTime getHorarioInicio() {
+        return horarioInicio;
+    }
+
+    public void setHorarioInicio(LocalTime horarioInicio) {
+        this.horarioInicio = horarioInicio;
+    }
+
+    public LocalTime getHorarioFim() {
+        return horarioFim;
+    }
+
+    public void setHorarioFim(LocalTime horarioFim) {
+        this.horarioFim = horarioFim;
     }
 
     public Participante getParticipante() {

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 public class EventoDTO {
@@ -32,6 +33,9 @@ public class EventoDTO {
 
     @NotNull(message = "O campo CLIENTE é requerido")
     private Integer organizador;
+
+    private LocalTime horarioInicio;
+    private LocalTime horarioFim;
 
     private String nomeParticipante;
     private String nomeOrganizador;
@@ -132,5 +136,21 @@ public class EventoDTO {
 
     public void setNomeOrganizador(String nomeOrganizador) {
         this.nomeOrganizador = nomeOrganizador;
+    }
+
+    public LocalTime getHorarioInicio() {
+        return horarioInicio;
+    }
+
+    public void setHorarioInicio(LocalTime horarioInicio) {
+        this.horarioInicio = horarioInicio;
+    }
+
+    public LocalTime getHorarioFim() {
+        return horarioFim;
+    }
+
+    public void setHorarioFim(LocalTime horarioFim) {
+        this.horarioFim = horarioFim;
     }
 }
