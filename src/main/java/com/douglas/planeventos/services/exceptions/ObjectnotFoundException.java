@@ -1,6 +1,10 @@
 package com.douglas.planeventos.services.exceptions;
 
-public class ObjectnotFoundException extends RuntimeException{
+import java.io.Serial;
+
+public class ObjectnotFoundException extends RuntimeException {
+
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	public ObjectnotFoundException(String message, Throwable cause) {
