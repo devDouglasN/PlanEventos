@@ -28,10 +28,10 @@ public class EventoDTO {
     @NotNull(message = "O campo HORARIO é requerido")
     private Integer horario;
 
-    @NotNull(message = "O campo TECNICO é requerido")
+    @NotNull(message = "O campo Participante é requerido")
     private Integer participante;
 
-    @NotNull(message = "O campo CLIENTE é requerido")
+    @NotNull(message = "O campo Organizador é requerido")
     private Integer organizador;
 
     private LocalTime horarioInicio;
@@ -51,8 +51,8 @@ public class EventoDTO {
         this.descricao = obj.getDescricao();
         this.status = obj.getStatus().getCodigo();
         this.horario = obj.getHorario().getCodigo();
-        this.organizador = obj.getOrganizador().getId();
         this.participante = obj.getParticipante().getId();
+        this.organizador = obj.getOrganizador().getId();
         this.nomeOrganizador = obj.getOrganizador().getNome();
         this.nomeParticipante = obj.getParticipante().getNome();
     }
@@ -63,15 +63,6 @@ public class EventoDTO {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public LocalDate getDataEvento() {
@@ -98,6 +89,14 @@ public class EventoDTO {
         this.descricao = descricao;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getHorario() {
         return horario;
     }
@@ -122,22 +121,6 @@ public class EventoDTO {
         this.organizador = organizador;
     }
 
-    public String getNomeParticipante() {
-        return nomeParticipante;
-    }
-
-    public void setNomeParticipante(String nomeParticipante) {
-        this.nomeParticipante = nomeParticipante;
-    }
-
-    public String getNomeOrganizador() {
-        return nomeOrganizador;
-    }
-
-    public void setNomeOrganizador(String nomeOrganizador) {
-        this.nomeOrganizador = nomeOrganizador;
-    }
-
     public LocalTime getHorarioInicio() {
         return horarioInicio;
     }
@@ -152,5 +135,21 @@ public class EventoDTO {
 
     public void setHorarioFim(LocalTime horarioFim) {
         this.horarioFim = horarioFim;
+    }
+
+    public String getNomeParticipante() {
+        return nomeParticipante;
+    }
+
+    public void setNomeParticipante(String nomeParticipante) {
+        this.nomeParticipante = nomeParticipante;
+    }
+
+    public String getNomeOrganizador() {
+        return nomeOrganizador;
+    }
+
+    public void setNomeOrganizador(String nomeOrganizador) {
+        this.nomeOrganizador = nomeOrganizador;
     }
 }

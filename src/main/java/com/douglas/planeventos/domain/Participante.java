@@ -3,7 +3,7 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class Participante extends Pessoa {
     private static final long serialVersionUID = 1L;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "participante")
+    @ManyToMany(mappedBy = "participante")
     private List<Evento> eventos = new ArrayList<>();
 
     private Boolean active;
