@@ -26,7 +26,6 @@ public class Evento implements Serializable {
     private String descricao;
     private StatusEvento status;
     private HorarioEvento horario;
-
     private LocalTime horarioInicio;
     private LocalTime horarioFim;
 

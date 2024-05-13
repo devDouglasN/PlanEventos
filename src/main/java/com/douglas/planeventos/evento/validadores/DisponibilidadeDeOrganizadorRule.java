@@ -1,7 +1,7 @@
 package com.douglas.planeventos.evento.validadores;
 
 import com.douglas.planeventos.repositories.OrganizadorRepository;
-import jakarta.validation.ValidationException;
+import com.douglas.planeventos.services.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
