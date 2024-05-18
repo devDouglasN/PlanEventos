@@ -9,17 +9,16 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class TokenService {
 	
-	@Value("${jwt.secret}")
+	  @Value("${jwt.secret}")
 	  private String secretPhrase;
 
-	  public String generateToken(UserSS userSS) {
+	  public String generateToken( UserSS userSS) {
 	    try {
 	      Algorithm algorithm = Algorithm.HMAC256(secretPhrase);
 	      String token = JWT.create()
