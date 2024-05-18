@@ -14,8 +14,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Pessoa implements Serializable{
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
+public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,6 +32,8 @@ public abstract class Pessoa implements Serializable{
 	protected String email;
 	protected String senha;
 
+	protected Boolean active;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
 	protected Set<Integer> perfis = new HashSet<>();
@@ -45,6 +48,7 @@ public abstract class Pessoa implements Serializable{
 
 	public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
 		super();
+		this.active = true;
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
