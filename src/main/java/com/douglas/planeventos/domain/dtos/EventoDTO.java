@@ -51,10 +51,16 @@ public class EventoDTO {
         this.descricao = obj.getDescricao();
         this.status = obj.getStatus().getCodigo();
         this.horario = obj.getHorario().getCodigo();
-        this.participante = obj.getParticipante().getId();
-        this.organizador = obj.getOrganizador().getId();
-        this.nomeOrganizador = obj.getOrganizador().getNome();
-        this.nomeParticipante = obj.getParticipante().getNome();
+
+        if (!obj.getParticipantes().isEmpty()) {
+            this.participante = obj.getParticipantes().get(0).getId();
+            this.nomeParticipante = obj.getParticipantes().get(0).getNome();
+        }
+
+        if (!obj.getOrganizadores().isEmpty()) {
+            this.organizador = obj.getOrganizadores().get(0).getId();
+            this.nomeOrganizador = obj.getOrganizadores().get(0).getNome();
+        }
     }
 
     public Integer getId() {
