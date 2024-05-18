@@ -3,9 +3,9 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.domain.dtos.OrganizadorDTO;
 import com.douglas.planeventos.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +13,12 @@ import java.util.stream.Collectors;
 @Entity
 public class Organizador extends Pessoa {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "organizador")
-    private List<Evento> eventos = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "evento_id")
+    private Evento evento;
 
     private Boolean active;
 
@@ -42,12 +43,12 @@ public class Organizador extends Pessoa {
         this.dataCriacao = obj.getDataCriacao();
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
+    public Evento getEvento() {
+        return evento;
     }
 
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 
     public Boolean getActive() {

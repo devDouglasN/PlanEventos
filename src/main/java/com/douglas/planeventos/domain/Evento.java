@@ -3,10 +3,13 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.enums.HorarioEvento;
 import com.douglas.planeventos.enums.StatusEvento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -29,21 +32,20 @@ public class Evento implements Serializable {
     private LocalTime horarioInicio;
     private LocalTime horarioFim;
 
-    @ManyToOne
-    @JoinColumn(name = "organizador_id")
-    private Organizador organizador;
+    @JsonIgnore
+    @OneToMany(mappedBy = "evento")
+    private List<Organizador> organizadores = new ArrayList<>();
 
-
-    @ManyToOne
-    @JoinColumn(name = "participante_id")
-    private Participante participante;
+    @JsonIgnore
+    @OneToMany(mappedBy = "evento")
+    private List<Participante> participantes = new ArrayList<>();
 
 
     public Evento() {
         super();
     }
 
-    public Evento(Integer id, LocalDate dataEvento, String local, String descricao, StatusEvento status, HorarioEvento horario, Organizador organizador, Participante participante) {
+    public Evento(Integer id, LocalDate dataEvento, String local, String descricao, StatusEvento status, HorarioEvento horario, List<Organizador> organizadores, List<Participante> participantes) {
         super();
         this.id = id;
         this.dataEvento = dataEvento;
@@ -51,8 +53,8 @@ public class Evento implements Serializable {
         this.descricao = descricao;
         this.status = status;
         this.horario = horario;
-        this.organizador = organizador;
-        this.participante = participante;
+        this.organizadores = organizadores;
+        this.participantes = participantes;
     }
 
     public Integer getId() {
@@ -120,20 +122,20 @@ public class Evento implements Serializable {
         this.horarioFim = horarioFim;
     }
 
-    public Participante getParticipante() {
-        return participante;
+    public List<Organizador> getOrganizadores() {
+        return organizadores;
     }
 
-    public void setParticipante(Participante participante) {
-        this.participante = participante;
+    public void setOrganizadores(List<Organizador> organizadores) {
+        this.organizadores = organizadores;
     }
 
-    public Organizador getOrganizador() {
-        return organizador;
+    public List<Participante> getParticipantes() {
+        return participantes;
     }
 
-    public void setOrganizador(Organizador organizador) {
-        this.organizador = organizador;
+    public void setParticipantes(List<Participante> participantes) {
+        this.participantes = participantes;
     }
 
     @Override
