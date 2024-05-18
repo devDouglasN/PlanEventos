@@ -43,7 +43,7 @@ public class EventoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Evento> create(@Valid @RequestBody EventoDados eventoDados) {
+	public ResponseEntity<EventoDTO> create(@Valid @RequestBody EventoDados eventoDados) {
 		Evento newObj = service.newEvento(eventoDados);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
