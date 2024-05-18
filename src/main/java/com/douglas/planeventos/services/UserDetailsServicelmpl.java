@@ -13,7 +13,7 @@ import java.util.Optional;
 
 
 @Service
-public class UserDetailsServicelmpl  implements UserDetailsService{
+public class UserDetailsServicelmpl implements UserDetailsService{
 
 	@Autowired
 	private PessoaRepository repository;

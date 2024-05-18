@@ -56,10 +56,6 @@ public class ParticipanteService {
 	public void delete(Integer id) {
 		Participante obj = findById(id);
 
-		if (obj.getEventos().size() > 0) {
-			throw new DataIntegrityViolationException("Participante possui eventos e não pode ser deletado!");
-		}
-
 		repository.deleteById(id);		
 	}
 

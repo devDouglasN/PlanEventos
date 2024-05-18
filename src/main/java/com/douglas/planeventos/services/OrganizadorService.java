@@ -57,15 +57,13 @@ public class OrganizadorService {
 	public void delete(Integer id) {
 		Organizador obj = findById(id);
 
-		if (obj.getEventos().size() > 0) {
-			throw new DataIntegrityViolationException("Organizador possui eventos e não pode ser deletado!");
-		}
-
 		repository.deleteById(id);		
 	}
 
 	private void validaPorEmail(OrganizadorDTO objDTO) {
+
 		Optional<Pessoa> obj = pessoaRepository.findByEmail(objDTO.getEmail());
+
 		if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
 		}
