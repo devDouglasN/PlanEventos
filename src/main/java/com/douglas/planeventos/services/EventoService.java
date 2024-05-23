@@ -1,7 +1,5 @@
 package com.douglas.planeventos.services;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,11 +8,11 @@ import com.douglas.planeventos.domain.Evento;
 import com.douglas.planeventos.domain.Organizador;
 import com.douglas.planeventos.domain.Participante;
 import com.douglas.planeventos.domain.dtos.EventoDTO;
-import com.douglas.planeventos.enums.HorarioEvento;
-import com.douglas.planeventos.enums.StatusEvento;
 import com.douglas.planeventos.evento.validadores.EventoDados;
 import com.douglas.planeventos.evento.validadores.ValidadorParaEvento;
 import com.douglas.planeventos.repositories.EventoRepository;
+import com.douglas.planeventos.repositories.OrganizadorRepository;
+import com.douglas.planeventos.repositories.ParticipanteRepository;
 import com.douglas.planeventos.services.exceptions.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,6 +24,12 @@ public class EventoService {
 	
 	@Autowired
 	private EventoRepository repository;
+
+	@Autowired
+	private ParticipanteRepository participanteRepository;
+
+	@Autowired
+	private OrganizadorRepository organizadorRepository;
 
 	@Autowired
 	private OrganizadorService organizadorService;
@@ -55,8 +59,7 @@ public class EventoService {
 				objDTO.getDataEvento(),
 				objDTO.getHorarioInicio(),
 				objDTO.getHorarioFim(),
-				LocalDateTime.now(), // ou outra data que você queira usar
-				null // ou a quantidade de pessoas que você queira usar
+				null
 		);
 
 		oldObj = newEvento(eventoDados);
@@ -66,22 +69,32 @@ public class EventoService {
 
 	public Evento newEvento(EventoDados eventoDados) {
 
-		Organizador organizador = organizadorService.findById(eventoDados.idOrganizador());
-		Participante participante = participanteService.findById(eventoDados.idParticipante());
+		if(!participanteRepository.existsById(eventoDados.idParticipante())) {
+			throw new ObjectnotFoundException("Participante não encontrado!");
+		}
 
-		// Criação do evento
+		if(!organizadorRepository.existsById(eventoDados.idOrganizador())) {
+			throw new ObjectnotFoundException("Organizador não encontrado!");
+		}
+
+		Participante participante = participanteService.findById(eventoDados.idParticipante());
+		Organizador organizador = organizadorService.findById(eventoDados.idOrganizador());
+
+		validadores.forEach(validator -> validator.validador(eventoDados));
+
 		Evento evento = new Evento();
 		evento.setDataEvento(eventoDados.dataEvento());
 		evento.setHorarioInicio(eventoDados.horarioInicio());
 		evento.setHorarioFim(eventoDados.horarioFim());
-		evento.setOrganizador(organizador);
-		evento.setParticipante(participante);
 
-		validadores.forEach(validator -> validator.validador(eventoDados));
+		List<Participante> participantes = new ArrayList<>();
+		participantes.add(participante);
+		evento.setParticipantes(participantes);
 
-		// Salvar o evento no repositório
+		List<Organizador> organizadores = new ArrayList<>();
+		organizadores.add(organizador);
+		evento.setOrganizadores(organizadores);
+
 		return repository.save(evento);
 	}
-
-
 }
