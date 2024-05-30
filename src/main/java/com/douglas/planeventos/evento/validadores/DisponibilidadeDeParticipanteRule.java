@@ -18,7 +18,8 @@ public class DisponibilidadeDeParticipanteRule implements ValidadorParaEvento {
 
         var participanteExiste = repository.existsByIdAndActiveTrue(dados.idParticipante());
 
-        if(!participanteExiste) {}
-        throw new ValidationException("Participante não encontrado!");
+        if(!participanteExiste) {
+            throw new ValidationException("Participante não encontrado!");
+        }
     }
 }

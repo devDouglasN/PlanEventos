@@ -1,9 +1,8 @@
 package com.douglas.planeventos.evento.validadores;
 
-import jakarta.validation.ValidationException;
+import com.douglas.planeventos.services.exceptions.ValidationException;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Component
