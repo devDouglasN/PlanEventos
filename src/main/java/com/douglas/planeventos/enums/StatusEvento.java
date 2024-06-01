@@ -1,5 +1,7 @@
 package com.douglas.planeventos.enums;
 
+import jakarta.validation.constraints.NotNull;
+
 public enum StatusEvento  {
 
 	ABERTO(0, "ABERTO"), 
@@ -22,7 +24,7 @@ public enum StatusEvento  {
 		return descricao;
 	}
 
-	public static StatusEvento toEnum(Integer cod) {
+	public static StatusEvento toEnum(@NotNull(message = "O campo STATUS é requerido") StatusEvento cod) {
 		if (cod == null) {
 			return null;
 		}

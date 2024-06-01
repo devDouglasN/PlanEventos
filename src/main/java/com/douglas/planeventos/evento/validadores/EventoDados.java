@@ -4,16 +4,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public record EventoDados (
 
         @NotNull
-        Integer idParticipante,
+        List<Integer> idsParticipantes,
 
         @NotNull
-        Integer idOrganizador,
-
-        LocalDate dataEvento,
+        List<Integer> idsOrganizadores,
 
         @NotNull
         LocalTime horarioInicio,
@@ -21,6 +20,12 @@ public record EventoDados (
         @NotNull
         LocalTime horarioFim,
 
+        @NotNull
+        LocalDate dataEvento,
+
+        String local,
+
+        String descricao,
 
         Integer quantidadePessoas
 ) {

@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DisponibilidadeDeParticipanteRule implements ValidadorParaEvento {
+public class DisponibilidadeDeParticipanteRule implements ValidadorParaEventoValidacao {
 
     @Autowired
     private ParticipanteRepository repository;
 
-    public void validador (EventoDados dados) {
-        if(dados.idParticipante() == null) {
+    public void validador(EventoValidacaoDados dados) {
+        if (dados.idParticipante() == null) {
             return;
         }
 
         var participanteExiste = repository.existsByIdAndActiveTrue(dados.idParticipante());
 
-        if(!participanteExiste) {
+        if (!participanteExiste) {
             throw new ValidationException("Participante não encontrado!");
         }
     }

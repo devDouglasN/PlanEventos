@@ -1,161 +1,62 @@
 package com.douglas.planeventos.domain.dtos;
 
 import com.douglas.planeventos.domain.Evento;
+import com.douglas.planeventos.domain.Organizador;
+import com.douglas.planeventos.domain.Participante;
+import com.douglas.planeventos.enums.StatusEvento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 
-import java.io.Serial;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
+public record EventoDTO(
 
-public class EventoDTO {
+        Integer id,
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+        @JsonFormat(pattern = "dd/MM/yyyy")
+        LocalDate dataEvento,
 
-    private Integer id;
+        String local,
+        String descricao,
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataEvento;
+        @NotNull(message = "O campo STATUS é requerido")
+        StatusEvento status,
 
-    private String local;
-    private String descricao;
+        @JsonFormat(pattern = "HH:mm:ss")
+        LocalTime horarioInicio,
 
-    @NotNull(message = "O campo STATUS é requerido")
-    private Integer status;
+        @JsonFormat(pattern = "HH:mm:ss")
+        LocalTime horarioFim,
 
-    @NotNull(message = "O campo HORARIO é requerido")
-    private Integer horario;
+        Integer quantidadePessoas,
 
-    @NotNull(message = "O campo Participante é requerido")
-    private Integer participante;
+        @NotNull(message = "O campo Participante é requerido")
+        List<Integer> participantes,
 
-    @NotNull(message = "O campo Organizador é requerido")
-    private Integer organizador;
+        @NotNull(message = "O campo Organizador é requerido")
+        List<Integer> organizadores,
 
-    private LocalTime horarioInicio;
-    private LocalTime horarioFim;
-
-    private String nomeParticipante;
-    private String nomeOrganizador;
-
-    public EventoDTO() {
-        super();
-    }
-
+        String nomeParticipante,
+        String nomeOrganizador
+) {
     public EventoDTO(Evento obj) {
-        this.id = obj.getId();
-        this.dataEvento = obj.getDataEvento();
-        this.local = obj.getLocal();
-        this.descricao = obj.getDescricao();
-        this.status = obj.getStatus().getCodigo();
-        this.horario = obj.getHorario().getCodigo();
-
-        if (!obj.getParticipantes().isEmpty()) {
-            this.participante = obj.getParticipantes().get(0).getId();
-            this.nomeParticipante = obj.getParticipantes().get(0).getNome();
-        }
-
-        if (!obj.getOrganizadores().isEmpty()) {
-            this.organizador = obj.getOrganizadores().get(0).getId();
-            this.nomeOrganizador = obj.getOrganizadores().get(0).getNome();
-        }
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public LocalDate getDataEvento() {
-        return dataEvento;
-    }
-
-    public void setDataEvento(LocalDate dataEvento) {
-        this.dataEvento = dataEvento;
-    }
-
-    public String getLocal() {
-        return local;
-    }
-
-    public void setLocal(String local) {
-        this.local = local;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getHorario() {
-        return horario;
-    }
-
-    public void setHorario(Integer horario) {
-        this.horario = horario;
-    }
-
-    public Integer getParticipante() {
-        return participante;
-    }
-
-    public void setParticipante(Integer participante) {
-        this.participante = participante;
-    }
-
-    public Integer getOrganizador() {
-        return organizador;
-    }
-
-    public void setOrganizador(Integer organizador) {
-        this.organizador = organizador;
-    }
-
-    public LocalTime getHorarioInicio() {
-        return horarioInicio;
-    }
-
-    public void setHorarioInicio(LocalTime horarioInicio) {
-        this.horarioInicio = horarioInicio;
-    }
-
-    public LocalTime getHorarioFim() {
-        return horarioFim;
-    }
-
-    public void setHorarioFim(LocalTime horarioFim) {
-        this.horarioFim = horarioFim;
-    }
-
-    public String getNomeParticipante() {
-        return nomeParticipante;
-    }
-
-    public void setNomeParticipante(String nomeParticipante) {
-        this.nomeParticipante = nomeParticipante;
-    }
-
-    public String getNomeOrganizador() {
-        return nomeOrganizador;
-    }
-
-    public void setNomeOrganizador(String nomeOrganizador) {
-        this.nomeOrganizador = nomeOrganizador;
+        this(
+                obj.getId(),
+                obj.getDataEvento(),
+                obj.getLocal(),
+                obj.getDescricao(),
+                obj.getStatus(),
+                obj.getHorarioInicio(),
+                obj.getHorarioFim(),
+                obj.getQuantidadePessoas(),
+                obj.getParticipantes().stream().map(Participante::getId).collect(Collectors.toList()),
+                obj.getOrganizadores().stream().map(Organizador::getId).collect(Collectors.toList()),
+                obj.getParticipantes().stream().map(Participante::getNome).collect(Collectors.joining(", ")),
+                obj.getOrganizadores().stream().map(Organizador::getNome).collect(Collectors.joining(", "))
+        );
     }
 }
+

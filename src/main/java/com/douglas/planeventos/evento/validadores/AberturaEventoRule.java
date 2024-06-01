@@ -16,7 +16,7 @@ public class AberturaEventoRule implements ValidadorParaEvento {
         var sabado = data.getDayOfWeek().equals(DayOfWeek.SATURDAY);
         var domingo = data.getDayOfWeek().equals(DayOfWeek.SUNDAY);
 
-        if (sexta || sabado || domingo) {
+        if (!(sexta || sabado || domingo)) {
             throw new ValidationException("O evento deve ocorrer apenas às sextas, sábados ou domingos!");
         }
     }

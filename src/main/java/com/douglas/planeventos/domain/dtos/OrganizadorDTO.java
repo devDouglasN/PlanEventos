@@ -4,110 +4,46 @@ import com.douglas.planeventos.domain.Organizador;
 import com.douglas.planeventos.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.br.CPF;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+public record OrganizadorDTO(
+        Integer id,
 
-public class OrganizadorDTO implements Serializable {
+        @NotNull(message = "O campo NOME é requerido")
+        String nome,
 
-    private static final long serialVersionUID = 1L;
+        @NotNull(message = "O campo CPF é requerido")
+        @CPF
+        String cpf,
 
-    protected Integer id;
+        @NotNull(message = "O campo EMAIL é requerido")
+        String email,
 
-    @NotNull(message = "O campo NOME é requerido")
-    protected String nome;
+        @NotNull(message = "O campo SENHA é requerido")
+        String senha,
 
-    @NotNull(message = "O campo CPF é requerido")
-    @CPF
-    protected String cpf;
+        Set<Integer> perfis,
 
-    @NotNull(message = "O campo EMAIL é requerido")
-    protected String email;
-
-    @NotNull(message = "O campo SENHA é requerido")
-    protected String senha;
-
-    protected Set<Integer> perfis = new HashSet<>();
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    protected LocalDate dataCriacao = LocalDate.now();
-
+        @JsonFormat(pattern = "dd/MM/yyyy")
+        LocalDate dataCriacao
+) {
     public OrganizadorDTO() {
-        super();
-        addPerfil(Perfil.ORGANIZADOR);
+        this(null, null, null, null, null, Set.of(Perfil.ORGANIZADOR.getCodigo()), LocalDate.now());
     }
 
     public OrganizadorDTO(Organizador obj) {
-        super();
-        this.id = obj.getId();
-        this.nome = obj.getNome();
-        this.cpf = obj.getCpf();
-        this.email = obj.getEmail();
-        this.senha = obj.getSenha();
-        this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-        this.dataCriacao = obj.getDataCriacao();
-        addPerfil(Perfil.ORGANIZADOR);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Set<Perfil> getPerfis() {
-        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
-    }
-
-    public void addPerfil(Perfil perfil) {
-        this.perfis.add(perfil.getCodigo());
-    }
-
-    public LocalDate getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(LocalDate dataCriacao) {
-        this.dataCriacao = dataCriacao;
+        this(
+                obj.getId(),
+                obj.getNome(),
+                obj.getCpf(),
+                obj.getEmail(),
+                obj.getSenha(),
+                obj.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet()),
+                obj.getDataCriacao()
+        );
     }
 }

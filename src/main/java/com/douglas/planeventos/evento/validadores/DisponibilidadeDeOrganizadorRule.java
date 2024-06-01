@@ -6,22 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DisponibilidadeDeOrganizadorRule implements ValidadorParaEvento {
+public class DisponibilidadeDeOrganizadorRule implements ValidadorParaEventoValidacao {
 
     @Autowired
     private OrganizadorRepository repository;
 
-    public void validador (EventoDados dados) {
+    public void validador(EventoValidacaoDados dados) {
 
-        if(dados.idOrganizador() == null) {
+        if (dados.idOrganizador() == null) {
             return;
         }
 
         var organizadorExiste = repository.existsByIdAndActiveTrue(dados.idOrganizador());
 
-        if(!organizadorExiste) {
+        if (!organizadorExiste) {
             throw new ValidationException("Organizador não encontrado!");
         }
-
     }
 }
