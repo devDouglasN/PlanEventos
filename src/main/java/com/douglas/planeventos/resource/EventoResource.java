@@ -34,21 +34,24 @@ public class EventoResource {
 		Evento obj = service.findById(id);
 		return ResponseEntity.ok().body(new EventoDTO(obj));
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<EventoDTO>> findAll() {
 		List<Evento> list = service.findAll();
 		List<EventoDTO> listDTO = list.stream().map(obj -> new EventoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<EventoDTO> create(@Valid @RequestBody EventoDados eventoDados) {
-		Evento newObj = service.newEvento(eventoDados);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		EventoDTO newObjDTO = service.newEvento(eventoDados);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(newObjDTO.id())
+				.toUri();
+		return ResponseEntity.created(uri).body(newObjDTO);
 	}
-	
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EventoDTO> update(@PathVariable Integer id, @Valid @RequestBody EventoDTO objDTO) {
 		Evento newObj = service.update(id, objDTO);
