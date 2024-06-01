@@ -1,10 +1,12 @@
 package com.douglas.planeventos.domain;
 
 import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
+import com.douglas.planeventos.enums.Perfil;
 import jakarta.persistence.*;
 
 import java.io.Serial;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Participante extends Pessoa {
@@ -20,22 +22,32 @@ public class Participante extends Pessoa {
 
     public Participante() {
         super();
+        addPerfil(Perfil.PARTICIPANTE);
     }
 
     public Participante(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
+        addPerfil(Perfil.PARTICIPANTE);
+    }
+
+    public Participante(Integer id, String nome, String cpf, String email, String senha, Set<Integer> perfis, LocalDate dataCriacao) {
+        super(id, nome, cpf, email, senha);
+        this.perfis = perfis != null ? perfis : Set.of(Perfil.PARTICIPANTE.getCodigo());
+        this.dataCriacao = dataCriacao;
+        this.active = true;
     }
 
     public Participante(ParticipanteDTO obj) {
         super();
+        this.id = obj.id();
+        this.nome = obj.nome();
+        this.cpf = obj.cpf();
+        this.email = obj.email();
+        this.senha = obj.senha();
+        this.perfis = obj.perfis() != null ? obj.perfis() : Set.of(Perfil.PARTICIPANTE.getCodigo());
+        this.dataCriacao = obj.dataCriacao();
         this.active = true;
-        this.id = obj.getId();
-        this.nome = obj.getNome();
-        this.cpf = obj.getCpf();
-        this.email = obj.getEmail();
-        this.senha = obj.getSenha();
-        this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-        this.dataCriacao = obj.getDataCriacao();
+        addPerfil(Perfil.PARTICIPANTE);
     }
 
     public Evento getEvento() {
