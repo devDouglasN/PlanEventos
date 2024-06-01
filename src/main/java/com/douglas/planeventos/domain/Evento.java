@@ -27,10 +27,15 @@ public class Evento implements Serializable {
     private String local;
 
     private String descricao;
+
     private StatusEvento status;
+
     private HorarioEvento horario;
+
     private LocalTime horarioInicio;
+
     private LocalTime horarioFim;
+    private Integer quantidadePessoas;
 
     @JsonIgnore
     @OneToMany(mappedBy = "evento")
@@ -40,19 +45,20 @@ public class Evento implements Serializable {
     @OneToMany(mappedBy = "evento")
     private List<Participante> participantes = new ArrayList<>();
 
-
     public Evento() {
         super();
     }
 
-    public Evento(Integer id, LocalDate dataEvento, String local, String descricao, StatusEvento status, HorarioEvento horario, List<Organizador> organizadores, List<Participante> participantes) {
-        super();
+    public Evento(Integer id, LocalDate dataEvento, String local, String descricao, StatusEvento status, HorarioEvento horario, LocalTime horarioInicio, LocalTime horarioFim, Integer quantidadePessoas, List<Organizador> organizadores, List<Participante> participantes) {
         this.id = id;
         this.dataEvento = dataEvento;
         this.local = local;
         this.descricao = descricao;
         this.status = status;
         this.horario = horario;
+        this.horarioInicio = horarioInicio;
+        this.horarioFim = horarioFim;
+        this.quantidadePessoas = quantidadePessoas;
         this.organizadores = organizadores;
         this.participantes = participantes;
     }
@@ -136,6 +142,14 @@ public class Evento implements Serializable {
 
     public void setParticipantes(List<Participante> participantes) {
         this.participantes = participantes;
+    }
+
+    public Integer getQuantidadePessoas() {
+        return quantidadePessoas;
+    }
+
+    public void setQuantidadePessoas(Integer quantidadePessoas) {
+        this.quantidadePessoas = quantidadePessoas;
     }
 
     @Override
