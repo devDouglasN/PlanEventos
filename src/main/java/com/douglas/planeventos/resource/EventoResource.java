@@ -8,6 +8,7 @@ import com.douglas.planeventos.domain.Evento;
 import com.douglas.planeventos.domain.dtos.EventoDTO;
 import com.douglas.planeventos.evento.validadores.EventoDados;
 import com.douglas.planeventos.services.EventoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import jakarta.validation.Valid;
 
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping(value = "/eventos")
 public class EventoResource {
@@ -38,7 +39,7 @@ public class EventoResource {
 	@GetMapping
 	public ResponseEntity<List<EventoDTO>> findAll() {
 		List<Evento> list = service.findAll();
-		List<EventoDTO> listDTO = list.stream().map(obj -> new EventoDTO(obj)).collect(Collectors.toList());
+		List<EventoDTO> listDTO = list.stream().map(EventoDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 

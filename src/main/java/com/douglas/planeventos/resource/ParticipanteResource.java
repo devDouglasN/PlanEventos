@@ -6,6 +6,7 @@ import java.util.List;
 import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.douglas.planeventos.services.ParticipanteService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("participantes")
 public class ParticipanteResource {

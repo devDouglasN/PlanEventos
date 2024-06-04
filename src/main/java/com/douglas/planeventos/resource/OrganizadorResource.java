@@ -6,13 +6,14 @@ import java.util.List;
 import com.douglas.planeventos.domain.dtos.OrganizadorDTO;
 import com.douglas.planeventos.services.OrganizadorService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping(value = "/organizadores")
 public class OrganizadorResource {
