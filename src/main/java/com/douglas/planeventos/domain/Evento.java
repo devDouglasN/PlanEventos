@@ -3,14 +3,14 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.enums.HorarioEvento;
 import com.douglas.planeventos.enums.StatusEvento;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Evento implements Serializable {
@@ -23,7 +23,6 @@ public class Evento implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataEvento;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private String local;
 
     private String descricao;
@@ -32,24 +31,33 @@ public class Evento implements Serializable {
 
     private HorarioEvento horario;
 
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime horarioInicio;
 
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime horarioFim;
+
     private Integer quantidadePessoas;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "evento")
-    private List<Organizador> organizadores = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "evento_participantes",
+            joinColumns = @JoinColumn(name = "evento_id"),
+            inverseJoinColumns = @JoinColumn(name = "participante_id"))
+    @BatchSize(size = 10)
+    private Set<Participante> participantes = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "evento")
-    private List<Participante> participantes = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "evento_organizadores",
+            joinColumns = @JoinColumn(name = "evento_id"),
+            inverseJoinColumns = @JoinColumn(name = "organizador_id"))
+    @BatchSize(size = 10)
+    private Set<Organizador> organizadores = new HashSet<>();
 
     public Evento() {
         super();
     }
 
-    public Evento(Integer id, LocalDate dataEvento, String local, String descricao, StatusEvento status, HorarioEvento horario, LocalTime horarioInicio, LocalTime horarioFim, Integer quantidadePessoas, List<Organizador> organizadores, List<Participante> participantes) {
+    public Evento(Integer id, LocalDate dataEvento, String local, String descricao, StatusEvento status, HorarioEvento horario, LocalTime horarioInicio, LocalTime horarioFim, Integer quantidadePessoas, Set<Organizador> organizadores, Set<Participante> participantes) {
         this.id = id;
         this.dataEvento = dataEvento;
         this.local = local;
@@ -111,7 +119,6 @@ public class Evento implements Serializable {
         this.horario = horario;
     }
 
-
     public LocalTime getHorarioInicio() {
         return horarioInicio;
     }
@@ -128,19 +135,19 @@ public class Evento implements Serializable {
         this.horarioFim = horarioFim;
     }
 
-    public List<Organizador> getOrganizadores() {
+    public Set<Organizador> getOrganizadores() {
         return organizadores;
     }
 
-    public void setOrganizadores(List<Organizador> organizadores) {
+    public void setOrganizadores(Set<Organizador> organizadores) {
         this.organizadores = organizadores;
     }
 
-    public List<Participante> getParticipantes() {
+    public Set<Participante> getParticipantes() {
         return participantes;
     }
 
-    public void setParticipantes(List<Participante> participantes) {
+    public void setParticipantes(Set<Participante> participantes) {
         this.participantes = participantes;
     }
 

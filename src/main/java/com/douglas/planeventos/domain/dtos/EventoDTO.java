@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public record EventoDTO(
@@ -34,10 +34,10 @@ public record EventoDTO(
         Integer quantidadePessoas,
 
         @NotNull(message = "O campo Participante é requerido")
-        List<Integer> participantes,
+        Set<Integer> participantes,
 
         @NotNull(message = "O campo Organizador é requerido")
-        List<Integer> organizadores,
+        Set<Integer> organizadores,
 
         String nomeParticipante,
         String nomeOrganizador
@@ -52,11 +52,10 @@ public record EventoDTO(
                 obj.getHorarioInicio(),
                 obj.getHorarioFim(),
                 obj.getQuantidadePessoas(),
-                obj.getParticipantes().stream().map(Participante::getId).collect(Collectors.toList()),
-                obj.getOrganizadores().stream().map(Organizador::getId).collect(Collectors.toList()),
+                obj.getParticipantes().stream().map(Participante::getId).collect(Collectors.toSet()),
+                obj.getOrganizadores().stream().map(Organizador::getId).collect(Collectors.toSet()),
                 obj.getParticipantes().stream().map(Participante::getNome).collect(Collectors.joining(", ")),
                 obj.getOrganizadores().stream().map(Organizador::getNome).collect(Collectors.joining(", "))
         );
     }
 }
-
