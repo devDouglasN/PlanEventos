@@ -1,12 +1,9 @@
 package com.douglas.planeventos.services;
 
 import com.douglas.planeventos.domain.Organizador;
-import com.douglas.planeventos.domain.Participante;
 import com.douglas.planeventos.domain.dtos.OrganizadorDTO;
-import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.douglas.planeventos.enums.Perfil;
 import com.douglas.planeventos.repositories.OrganizadorRepository;
-import com.douglas.planeventos.repositories.PessoaRepository;
 import com.douglas.planeventos.services.exceptions.ObjectnotFoundException;
 import com.douglas.planeventos.services.exceptions.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

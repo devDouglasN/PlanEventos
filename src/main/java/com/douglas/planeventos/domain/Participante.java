@@ -3,11 +3,15 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.domain.dtos.ParticipanteDTO;
 import com.douglas.planeventos.enums.Perfil;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Participante extends Pessoa {
 
@@ -50,19 +54,4 @@ public class Participante extends Pessoa {
         addPerfil(Perfil.PARTICIPANTE);
     }
 
-    public Evento getEvento() {
-        return evento;
-    }
-
-    public void setEvento(Evento evento) {
-        this.evento = evento;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 }

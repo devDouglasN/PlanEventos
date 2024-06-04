@@ -3,13 +3,17 @@ package com.douglas.planeventos.domain;
 import com.douglas.planeventos.domain.dtos.OrganizadorDTO;
 import com.douglas.planeventos.enums.Perfil;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.io.Serial;
 
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+@Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 public class Organizador extends Pessoa {
 
     @Serial
@@ -51,19 +55,4 @@ public class Organizador extends Pessoa {
         addPerfil(Perfil.ORGANIZADOR);
     }
 
-    public Evento getEvento() {
-        return evento;
-    }
-
-    public void setEvento(Evento evento) {
-        this.evento = evento;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 }
