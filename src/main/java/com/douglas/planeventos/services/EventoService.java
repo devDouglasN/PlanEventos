@@ -1,8 +1,8 @@
 package com.douglas.planeventos.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.douglas.planeventos.domain.Evento;
@@ -26,145 +26,147 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventoService {
 
-	@Autowired
-	private EventoRepository repository;
+    @Autowired
+    private EventoRepository repository;
 
-	@Autowired
-	private ParticipanteRepository participanteRepository;
+    @Autowired
+    private ParticipanteRepository participanteRepository;
 
-	@Autowired
-	private OrganizadorRepository organizadorRepository;
+    @Autowired
+    private OrganizadorRepository organizadorRepository;
 
-	@Autowired
-	private List<ValidadorParaEventoValidacao> validadores;
+    @Autowired
+    private List<ValidadorParaEvento> validadoresParaEvento;
 
-	public Evento findById(Integer id) {
-		Optional<Evento> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! ID: " + id));
-	}
+    @Autowired
+    private List<ValidadorParaEventoValidacao> validadoresParaEventoValidacao;
 
-	public List<Evento> findAll() {
-		return repository.findAll();
-	}
+    public Evento findById(Integer id) {
+        Optional<Evento> obj = repository.findById(id);
+        return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! ID: " + id));
+    }
 
+    public List<Evento> findAll() {
+        return repository.findAll();
+    }
 
-	public Evento update(Integer id, @Valid EventoDTO objDTO) {
+    public Evento update(Integer id, @Valid EventoDTO objDTO) {
+        Evento evento = findById(id);
+        evento.setDataEvento(objDTO.dataEvento());
+        evento.setLocal(objDTO.local());
+        evento.setDescricao(objDTO.descricao());
+        evento.setStatus(objDTO.status());
+        evento.setHorarioInicio(objDTO.horarioInicio());
+        evento.setHorarioFim(objDTO.horarioFim());
+        evento.setQuantidadePessoas(objDTO.quantidadePessoas());
 
-		Evento evento = findById(id);
-		evento.setDataEvento(objDTO.dataEvento());
-		evento.setLocal(objDTO.local());
-		evento.setDescricao(objDTO.descricao());
-		evento.setStatus(objDTO.status());
-		evento.setHorarioInicio(objDTO.horarioInicio());
-		evento.setHorarioFim(objDTO.horarioFim());
-		evento.setQuantidadePessoas(objDTO.quantidadePessoas());
+        Set<Participante> participantes = objDTO.participantes().stream()
+                .map(participanteId -> participanteRepository.findById(participanteId)
+                        .orElseThrow(() -> new ObjectnotFoundException("Participante não encontrado com o ID: " + participanteId)))
+                .collect(Collectors.toSet());
+        evento.setParticipantes(participantes);
 
-		List<Participante> participantes = objDTO.participantes().stream()
-				.map(participanteId -> participanteRepository.findById(participanteId)
-						.orElseThrow(() -> new ObjectnotFoundException("Participante não encontrado com o ID: " + participanteId)))
-				.collect(Collectors.toList());
-		evento.setParticipantes(participantes);
+        Set<Organizador> organizadores = objDTO.organizadores().stream()
+                .map(organizadorId -> organizadorRepository.findById(organizadorId)
+                        .orElseThrow(() -> new ObjectnotFoundException("Organizador não encontrado com o ID: " + organizadorId)))
+                .collect(Collectors.toSet());
+        evento.setOrganizadores(organizadores);
 
-		List<Organizador> organizadores = objDTO.organizadores().stream()
-				.map(organizadorId -> organizadorRepository.findById(organizadorId)
-						.orElseThrow(() -> new ObjectnotFoundException("Organizador não encontrado com o ID: " + organizadorId)))
-				.collect(Collectors.toList());
-		evento.setOrganizadores(organizadores);
+        for (Integer idParticipante : objDTO.participantes()) {
+            EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
+                    idParticipante,
+                    null,
+                    objDTO.horarioInicio(),
+                    objDTO.horarioFim(),
+                    objDTO.dataEvento()
+            );
+            validadoresParaEventoValidacao.forEach(validator -> validator.validador(validacaoDados));
+        }
 
-		for (Integer idParticipante : objDTO.participantes()) {
-			EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
-					idParticipante,
-					null,
-					objDTO.horarioInicio(),
-					objDTO.horarioFim(),
-					objDTO.dataEvento()
-			);
-			validadores.forEach(validator -> validator.validador(validacaoDados));
-		}
+        for (Integer idOrganizador : objDTO.organizadores()) {
+            EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
+                    null,
+                    idOrganizador,
+                    objDTO.horarioInicio(),
+                    objDTO.horarioFim(),
+                    objDTO.dataEvento()
+            );
+            validadoresParaEventoValidacao.forEach(validator -> validator.validador(validacaoDados));
+        }
 
-		for (Integer idOrganizador : objDTO.organizadores()) {
-			EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
-					null,
-					idOrganizador,
-					objDTO.horarioInicio(),
-					objDTO.horarioFim(),
-					objDTO.dataEvento()
-			);
-			validadores.forEach(validator -> validator.validador(validacaoDados));
-		}
+        return repository.save(evento);
+    }
 
-		return repository.save(evento);
-	}
+    public EventoDTO newEvento(EventoDados eventoDados) {
+        validadoresParaEvento.forEach(validator -> validator.validador(eventoDados));
 
-	public EventoDTO newEvento(EventoDados eventoDados) {
+        Set<Participante> participantes = eventoDados.idsParticipantes().stream()
+                .map(participanteId -> {
+                    EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
+                            participanteId,
+                            null,
+                            eventoDados.horarioInicio(),
+                            eventoDados.horarioFim(),
+                            eventoDados.dataEvento()
+                    );
+                    validadoresParaEventoValidacao.forEach(validator -> validator.validador(validacaoDados));
+                    return participanteRepository.findById(participanteId)
+                            .orElseThrow(() -> new ObjectnotFoundException("Participante não encontrado com o ID: " + participanteId));
+                })
+                .collect(Collectors.toSet());
 
-		List<Participante> participantes = eventoDados.idsParticipantes().stream()
-				.map(participanteId -> {
-					EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
-							participanteId,
-							null,
-							eventoDados.horarioInicio(),
-							eventoDados.horarioFim(),
-							eventoDados.dataEvento()
-					);
-					validadores.forEach(validator -> validator.validador(validacaoDados));
-					return participanteRepository.findById(participanteId)
-							.orElseThrow(() -> new ObjectnotFoundException("Participante não encontrado com o ID: " + participanteId));
-				})
-				.collect(Collectors.toList());
+        Set<Organizador> organizadores = eventoDados.idsOrganizadores().stream()
+                .map(organizadorId -> {
+                    EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
+                            null,
+                            organizadorId,
+                            eventoDados.horarioInicio(),
+                            eventoDados.horarioFim(),
+                            eventoDados.dataEvento()
+                    );
+                    validadoresParaEventoValidacao.forEach(validator -> validator.validador(validacaoDados));
+                    return organizadorRepository.findById(organizadorId)
+                            .orElseThrow(() -> new ObjectnotFoundException("Organizador não encontrado com o ID: " + organizadorId));
+                })
+                .collect(Collectors.toSet());
 
-		List<Organizador> organizadores = eventoDados.idsOrganizadores().stream()
-				.map(organizadorId -> {
-					EventoValidacaoDados validacaoDados = new EventoValidacaoDados(
-							null,
-							organizadorId,
-							eventoDados.horarioInicio(),
-							eventoDados.horarioFim(),
-							eventoDados.dataEvento()
-					);
-					validadores.forEach(validator -> validator.validador(validacaoDados));
-					return organizadorRepository.findById(organizadorId)
-							.orElseThrow(() -> new ObjectnotFoundException("Organizador não encontrado com o ID: " + organizadorId));
-				})
-				.collect(Collectors.toList());
+        Evento evento = new Evento();
+        evento.setDataEvento(eventoDados.dataEvento());
+        evento.setLocal(eventoDados.local());
+        evento.setDescricao(eventoDados.descricao());
+        evento.setStatus(StatusEvento.ABERTO);
+        evento.setHorarioInicio(eventoDados.horarioInicio());
+        evento.setHorarioFim(eventoDados.horarioFim());
+        evento.setQuantidadePessoas(eventoDados.quantidadePessoas());
+        evento.setParticipantes(participantes);
+        evento.setOrganizadores(organizadores);
 
-		Evento evento = new Evento();
-		evento.setDataEvento(eventoDados.dataEvento());
-		evento.setLocal(eventoDados.local());
-		evento.setDescricao(eventoDados.descricao());
-		evento.setStatus(StatusEvento.ABERTO);
-		evento.setHorarioInicio(eventoDados.horarioInicio());
-		evento.setHorarioFim(eventoDados.horarioFim());
-		evento.setQuantidadePessoas(eventoDados.quantidadePessoas());
-		evento.setParticipantes(participantes);
-		evento.setOrganizadores(organizadores);
+        Evento savedEvento = repository.save(evento);
+        return updateEventoDTOWithNames(savedEvento);
+    }
 
-		Evento savedEvento = repository.save(evento);
-		return updateEventoDTOWithNames(savedEvento);
-	}
-	private EventoDTO updateEventoDTOWithNames(Evento evento) {
-		List<String> participanteNomes = evento.getParticipantes().stream()
-				.map(Participante::getNome)
-				.collect(Collectors.toList());
+    private EventoDTO updateEventoDTOWithNames(Evento evento) {
+        List<String> participanteNomes = evento.getParticipantes().stream()
+                .map(Participante::getNome)
+                .collect(Collectors.toList());
 
-		List<String> organizadorNomes = evento.getOrganizadores().stream()
-				.map(Organizador::getNome)
-				.collect(Collectors.toList());
+        List<String> organizadorNomes = evento.getOrganizadores().stream()
+                .map(Organizador::getNome)
+                .collect(Collectors.toList());
 
-		return new EventoDTO(
-				evento.getId(),
-				evento.getDataEvento(),
-				evento.getLocal(),
-				evento.getDescricao(),
-				evento.getStatus(),
-				evento.getHorarioInicio(),
-				evento.getHorarioFim(),
-				evento.getQuantidadePessoas(),
-				evento.getParticipantes().stream().map(Participante::getId).collect(Collectors.toList()),
-				evento.getOrganizadores().stream().map(Organizador::getId).collect(Collectors.toList()),
-				String.join(", ", participanteNomes),
-				String.join(", ", organizadorNomes)
-		);
-	}
-
+        return new EventoDTO(
+                evento.getId(),
+                evento.getDataEvento(),
+                evento.getLocal(),
+                evento.getDescricao(),
+                evento.getStatus(),
+                evento.getHorarioInicio(),
+                evento.getHorarioFim(),
+                evento.getQuantidadePessoas(),
+                evento.getParticipantes().stream().map(Participante::getId).collect(Collectors.toSet()),
+                evento.getOrganizadores().stream().map(Organizador::getId).collect(Collectors.toSet()),
+                String.join(", ", participanteNomes),
+                String.join(", ", organizadorNomes)
+        );
+    }
 }
